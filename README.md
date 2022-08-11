@@ -1,10 +1,8 @@
 # Sound Event Detection Web
 
-This project is a prototype web app for Sound Event Detection.
+This project is a prototype web app for Sound Event Detection using Convolutional Gated Recurrent Unit Method.
 
-Implemented using Flask
-
-This project using Python 3.7.6 version
+Implemented using Flask and Python 3.7.9 version
 
 ## Directory Structure
 ```
@@ -20,13 +18,19 @@ Flask
 
 ## How to Run
 
-* Setup virtual enviroment
+* Setup Virtual Enviroment
   ```shell
-  env`\`Scripts`\`activate.bat
+  pip install virtualenv
+
+  virtualenv env
+
+  env\\Scripts\\activate.bat
+  ```
+* Setup Depedencies
+  ```shell
+  pip install -r requirements.txt
   ```
 * Start Development Server
   ```shell
   python app.py
   ```
-
-By Prayudha Adhitia Libramawan
