@@ -22,7 +22,7 @@ Flask
 
 * Setup virtual enviroment
   ```shell
-  env\Scripts\activate.bat
+  env`\`Scripts`\`activate.bat
   ```
 * Start Development Server
   ```shell
