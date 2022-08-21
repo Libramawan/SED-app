@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="https://i.ibb.co/vqwHx0F/icons8-sample-rate-30.png" />
     <link
       href="https://unpkg.com/@material-tailwind/html@latest/styles/material-tailwind.css"
       rel="stylesheet"/>
@@ -38,9 +39,8 @@
     </style>
   </head>
     <body>
-        {% include "navbar.html" %}
-        <div class="grid w-full px-4">
-            <div class="grid md:grid-cols-2 gap-2">
+        <div class="grid w-full px-4 mt-20">
+            <div class="grid md:grid-cols-2 gap-2 md:ml-24">
                 <div class="lg:w-full md:w-1/2 lg:pl-24 md:pl-16 md:items-start md:text-left items-center text-center">
                     <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">{{filename}} predict result</h1>
                     <p>Nilai dari start_time dan end_time berupa detik</p>
@@ -75,13 +75,10 @@
                     </div>
                 </div>
             </div>
-            <div class="flex justify-center px-12">
-                <img class="lg:w-full sm:w-1/2 w-3/4" src="../static/plt/{{vis_img}}" alt="vis image">
+            <div class="flex justify-center px-12 mr-12">
+                <img class="w-3/4" src="../static/plt/{{vis_img}}" alt="vis image">
             </div>
-            <div class="w-full mt-12 flex flex-row md:gap-4 justify-center">
-                <button type="button" onclick="window.location.href = '/testing'" class="max-w-fit text-lg text-white bg-indigo-500 border-0 mt-2 mb-4 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
-                    Kembali ke Testing
-                </button>
+            <div class="w-full mt-12 flex justify-center">
                 <button type="button" onclick="window.location.href = '/'" class="max-w-fit text-lg text-white bg-indigo-500 border-0 mt-2 mb-4 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
                     Kembali ke Home
                 </button>

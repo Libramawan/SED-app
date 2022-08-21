@@ -67,7 +67,7 @@ def predictEval():
         file = request.files['file']
         if file.filename == '':
             error_notFound = "Upload the audio first"
-            return render_template('testing.html' , error=error_notFound)
+            return render_template('home.html' , error=error_notFound)
         elif file and audio_ext_validator(file.filename):
             filename = file.filename
             audio_filename = os.path.basename(filename)
@@ -99,56 +99,8 @@ def predictEval():
         if(len(error_NotMatch) == 0):
             return redirect(url_for('success', filename=audio_filename, wave_img=wave_filename, mbe_img=mbe_filename, vis_img=vis_filename, tables=json_df))
         else:
-            return render_template('testing.html' , error=error_NotMatch)
-    return render_template('testing.html')
-
-@app.route('/predict-exam', methods = ['GET', 'POST'])
-def predictExam():
-    error_notFound = ''
-    error_NotMatch = ''
-    target_audio = os.path.abspath(os.path.join(BASE_DIR , "static/audio"))
-    if request.method == 'POST':
-        file = request.files['file']
-        if file.filename == '':
-            error_notFound = "Upload the audio first"
-            return render_template('testing.html' , error=error_notFound)
-        elif file and audio_ext_validator(file.filename):
-            filename = file.filename
-            audio_filename = os.path.basename(filename)
-            file.save(os.path.join(target_audio , filename))
-            AUDIO_PATH = os.path.join(target_audio , filename)
-            if audio_ch_validator(AUDIO_PATH):
-                csv_path  = "./static/results/{}_result.csv".format(audio_filename)
-                predictions = predict(AUDIO_PATH, model)
-                predictions_exam = predictions[predictions["labels"] == "speech"]
-                prediction_exam_result = predictions_exam.reset_index(drop=True)
-                prediction_exam_result.to_csv(csv_path, index=False, header=True)
-                json_df = prediction_exam_result.to_json()
-
-                plt_path = os.path.abspath(os.path.join(BASE_DIR, "static/plt", audio_filename))
-                wave_png_path = plt_path + "_wave.png"
-                wave_filename = os.path.basename(wave_png_path)
-                mbe_png_path = plt_path + "_mbe.png"
-                mbe_filename = os.path.basename(mbe_png_path)
-
-                vis_png_path = visualize_result(AUDIO_PATH)
-                vis_filename = os.path.basename(vis_png_path)
-
-                session['audio_filename'] = audio_filename
-                session['wave_filename'] = wave_filename
-                session['mbe_filename'] = mbe_filename
-                session['vis_filename'] = vis_filename
-                session['predictions'] = json_df
-            else:
-                error_NotMatch = "The audio has to be 2 channels"
-                os.remove(AUDIO_PATH)
-        else:
-            error_NotMatch = "The audio is not match with the requirement (wav extension only)"
-        if(len(error_NotMatch) == 0):
-            return redirect(url_for('success', filename=audio_filename, wave_img=wave_filename, mbe_img=mbe_filename, vis_img=vis_filename, tables=json_df))
-        else:
-            return render_template('testing.html' , error=error_NotMatch)
-    return render_template('testing.html')
+            return render_template('home.html' , error=error_NotMatch)
+    return render_template('home.html')
 
 @app.route("/success")
 def success():
@@ -377,10 +329,6 @@ def contiguous_regions(activity_array):
 @app.route('/')
 def index():
     return render_template('home.html')
-
-@app.route('/testing')
-def testing():
-    return render_template('testing.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

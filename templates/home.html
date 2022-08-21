@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="https://i.ibb.co/vqwHx0F/icons8-sample-rate-30.png" />
     <link
       href="https://unpkg.com/@material-tailwind/html@latest/styles/material-tailwind.css"
       rel="stylesheet"/>
@@ -19,15 +20,13 @@
     <title>Sound Event Detection</title>
   </head>
   <body>
-    {% include "navbar.html" %}
-          <!--add custom content with inheritance-->
-
-        <section class="mb-32 mt-8 text-gray-800 text-center lg:text-left background-radial-gradient">
+        <!--add custom content with inheritance-->
+        <section class="text-gray-800 text-center lg:text-left background-radial-gradient">
 
           <div class="relative overflow-hidden bg-no-repeat bg-cover" style="
                 background-position: 50%;
                 background-image: url('https://img.freepik.com/free-vector/colorful-equalizer-wave-background_52683-33072.jpg?w=1380&t=st=1660048593~exp=1660049193~hmac=736d839b3ea9bc6be677dbddf5ab718ac7000c3b1db962a218f5765dbc1c8f17');
-                height: 500px;
+                height: 400px;
               ">
             <div class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed"
               style="background-color: rgba(0, 0, 0, 0.75)">
@@ -45,6 +44,38 @@
           </div>
         </section>
 
+
+        {% if error %}
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative text-center" role="alert">
+          <strong class="font-bold">Error: </strong>
+          <span class="block sm:inline">{{error}}</span>
+        </div>
+        {% endif %}
+
+        <section class="w-full text-gray-600 body-font md:mt-14 mb-40 px-20">
+          <div class="container flex w-5/6 md:flex-row flex-col justify-center items-center ml-14 lg:ml-40">
+            <div class="md:max-w-2xl lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">
+              <img class="object-cover object-center rounded" alt="office" src="https://img.freepik.com/free-photo/group-young-business-people-working-office_158595-5210.jpg?w=1060&t=st=1659999573~exp=1660000173~hmac=861fdd12cd23f01457b08ad217b719af04a51bee109c8143e3aa84f93def068e">
+            </div>
+            <div class="lg:flex-grow md:w-1/2 lg:w-full lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
+              <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Uji Model</h1>
+              <p class="mb-2 leading-relaxed">Di sini Anda dapat melihat apa yang terjadi dalam audio.</p>
+              <p class="mb-2 leading-relaxed">Daftar kelas suara yang dipelajari model:</p>
+              <p class="mb-2 leading-relaxed">knock, drawer, clearthroat, phone, keysDrop, speech, keyboard, pageturn, cough, doorslam, dan laughter</p>
+              <div class="flex w-full md:justify-start justify-center items-end">
+                  <div class="relative md:w-full w-1/4">
+                      <label for="upload" class="leading-7 text-sm text-gray-600">Upload audio dari dataset evaluation</label>
+                      <form action="/predict-eval" method="post" enctype="multipart/form-data">
+                          <input class="form-control lg:w-2/3 mt-2 bg-gray-100 bg-opacity-50 rounded border border-gray-300" type="file" name="file">
+                          <p class="mt-2">Audio yang diupload harus memiliki 2 channels (stereo)</p>
+                          <input class="inline-flex text-white bg-indigo-500 border-0 mt-4 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg" type="submit" value="Predict">
+                      </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </section>
+
         <section class="mb-20 text-gray-800 px-40">
           <div class="block rounded-lg shadow-lg bg-white">
             <div class="flex flex-wrap items-center">
@@ -57,12 +88,12 @@
                   <h2 class="text-2xl font-bold mb-4">Abstrak</h2>
 
                   <p class="text-gray-900 mb-4">
-                    Penelitian deep learning telah menghasilkan banyak keberhasilan dalam berbagai bidang, akan tetapi pada kasus klasifikasi suara sering kali diaplikasikan untuk prediksi satu suara pada satu waktu dari keseluruhan rekaman suara. Pada kenyataanya suara merupakan sinyal yang sering bercampur dengan sinyal suara lainnya. Sound Event Detection (SED) merupakan solusi untuk mengatasi masalah kompleks dalam menganalisis dan identifikasi suara di lingkungan sehari-hari. Tujuan SED adalah untuk mengenali peristiwa apa saja yang terjadi pada keseluruhan rekaman suara dan mengenali kapan peritiwa itu terjadi. Target suara yang digunakan sebagai dataset untuk penelitian ini adalah suara-suara yang relatif terjadi pada lingkungan kantor. Dengan target suara tersebut maka dapat dilakukan pengaplikasian dengan lingkungan yang mirip seperti pendeteksi kecurangan ujian secara daring.
+                    Penelitian deep learning telah menghasilkan banyak keberhasilan dalam berbagai bidang, akan tetapi pada kasus klasifikasi suara sering kali diaplikasikan untuk prediksi satu suara pada satu waktu dari keseluruhan rekaman audio. Pada kenyataanya suara merupakan sinyal yang sering bercampur dengan sinyal suara lainnya. Sound Event Detection (SED) merupakan solusi untuk mengatasi masalah kompleks dalam menganalisis dan identifikasi suara di lingkungan sehari-hari. Tujuan SED adalah untuk mengidentifikasi kelas dan batas temporal dari suara pada keseluruhan rekaman audio.
                   </p>
                   <p class="text-gray-900 mb-4">
-                    Sistem dari SED dapat diimplementasikan menggunakan metode deep learning. Pada kasus polifonik yaitu suara yang tumpang tindih, diperlukan sebuah model yang dapat memprediksi suara pada tingkat segmen. Pada penelitian ini, Convolutional Gated Recurrent Unit (CGRU) ditentukan menjadi metode dalam pembuatan model SED. CGRU merupakan peningkatan arsitektur yang menggabungkan Convolutional Neural Network (CNN) dengan Gated Recurrent Unit (GRU).</p>
+                    Sistem dari SED dapat diimplementasikan menggunakan metode deep learning. Pada kasus polifonik yaitu suara yang tumpang tindih, diperlukan sebuah model yang dapat memprediksi suara pada tingkat segmen. Pada penelitian ini, Convolutional Gated Recurrent Unit (CGRU) ditentukan menjadi metode dalam pembuatan model SED. CGRU merupakan peningkatan arsitektur yang menggabungkan Convolutional Neural Network (CNN) dengan Gated Recurrent Unit (GRU).
                   <p class="text-gray-900 mb-2">
-                    Penelitian ini bertujuan untuk membuat model yang dapat memprediksi aktivitas temporal suara pada sebuah rekaman audio. Pada penelitian ini pun dilakukan percobaan hyperparameter untuk menemukan model terbaik. Hyperparameter yang digunakan adalah jenis lapisan recurrent yaitu GRU dan bidirectional GRU, jumlah lapisan recurrent, serta jumlah unit pada setiap lapisan recurrent. Model terbaik yang dihasilkan dari penelitian ini yaitu model dengan nilai f1 score sebesar 87.30% dan nilai error rate terendah yaitu 0.26.
+                    Penelitian ini bertujuan untuk membuat model yang dapat memprediksi aktivitas temporal suara pada sebuah rekaman audio. Model akan dapat memprediksi suara dengan kelas knock, drawer, clearthroat, phone, keysDrop, speech, keyboard, pageturn, cough, doorslam, dan laughter. Kelas suara tersebut ditentukan berdasarkan dataset yang digunakan yaitu TAU Spatial Event 2019. Pada penelitian ini pun dilakukan percobaan hyperparameter untuk menemukan model terbaik. Hyperparameter yang digunakan adalah jenis lapisan recurrent yaitu GRU dan bidirectional GRU, jumlah lapisan recurrent, serta jumlah unit pada setiap lapisan recurrent. Model terbaik yang dihasilkan dari penelitian ini yaitu model dengan nilai F1 score sebesar 87.30% dan nilai error rate terendah yaitu 0.26.
                   </p>
                   <strong>Kata Kunci:</strong>
                   <span>Deep learning, Sound Event Detection, Convolutional Gated Recurrent Unit</span>
@@ -73,7 +104,7 @@
         </section>
 
         <section class="grid text-gray-600 body-font px-40">
-          <div class="container px-5 py-24 mx-auto flex flex-wrap">
+          <div class="container px-5 py-16 mx-auto flex flex-wrap">
             <h2 class="text-3xl font-bold mb-6 pb-4 text-center">Tahapan Penelitian</h2>
             <div class="flex flex-wrap w-full gap-10">
               <div class="lg:w-3/5 md:w-1/2 md:pr-10 md:py-6">
@@ -133,88 +164,20 @@
                     <p class="leading-relaxed">Model yang terbaik akan dipilih berdasarkan F1-score yang tertinggi dan error rate yang terendah dari seluruh percobaan hyperparameter yang dilakukan.</p>
                   </div>
                 </div>
-                <div class="flex relative pb-12">
-                  <div class="h-full w-10 absolute inset-0 flex items-center justify-center">
-                    <div class="h-full w-1 bg-gray-200 pointer-events-none"></div>
-                  </div>
+                <div class="flex relative">
                   <div class="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-500 inline-flex items-center justify-center text-white relative z-10">
                     <h1 class="text-white">5</h1>
                   </div>
                   <div class="flex-grow pl-4">
-                    <h2 class="font-medium title-font text-sm text-gray-900 mb-1 tracking-wider">Perancangan Aplikasi</h2>
-                    <p class="leading-relaxed">Tahapan ini dilakukan perancangan aplikasi berbasis web pada sistem SED.</p>
-                  </div>
-                </div>
-                <div class="flex relative">
-                  <div class="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-500 inline-flex items-center justify-center text-white relative z-10">
-                    <h1 class="text-white">6</h1>
-                  </div>
-                  <div class="flex-grow pl-4">
-                    <h2 class="font-medium title-font text-sm text-gray-900 mb-1 tracking-wider">Pengujian Aplikasi</h2>
-                    <p class="leading-relaxed">Fitur utama pada aplikasi ini adalah fitur prediksi yang dilakukan dengan pengujian menggunakan salah satu data dari evaluation dataset yaitu data baru yang terpisah dan belum pernah dilihat dari pelatihan model. Skenario lain dari pengujian ini akan mengacu pada perancangan aplikasi yang telah direncanakan. </p>
+                    <h2 class="font-medium title-font text-sm text-gray-900 mb-1 tracking-wider">Pembuatan Antarmuka Aplikasi</h2>
+                    <p class="leading-relaxed">Tahapan ini dilakukan untuk memvisualisasikan penggunaan model dari Sound Event Detection melalui aplikasi berbasis web.</p>
                   </div>
                 </div>
               </div>
-              <img class="object-contain object-center w-96 rounded-lg md:mt-0 mt-12" src="./static/keras_model.drawio.png" alt="arsitektur model">
+              <img class="object-contain object-center w-72 rounded-lg md:mt-0 mt-12 ml-24" src="./static/keras_model.drawio.png" alt="arsitektur model">
             </div>
           </div>
         </section>
-
-        <section class="mb-16 text-gray-800 text-center w-full">
-          <h2 class="text-3xl font-bold mb-12 pb-4 text-center">Features</h2>
-          <div class="grid lg:grid-cols-2 gap-6 xl:gap-x-12 px-40 w-full">
-            <div class="mb-6 lg:mb-0">
-              <div class="relative block bg-white rounded-lg shadow-lg">
-                <div class="flex">
-                  <div
-                    class="relative overflow-hidden bg-no-repeat bg-cover overflow-hidden bg-no-repeat bg-cover shadow-lg rounded-lg mx-4 -mt-4"
-                    data-mdb-ripple="true" data-mdb-ripple-color="light">
-                    <img src="https://img.freepik.com/free-photo/group-young-business-people-working-office_158595-5210.jpg?w=1060&t=st=1659999573~exp=1660000173~hmac=861fdd12cd23f01457b08ad217b719af04a51bee109c8143e3aa84f93def068e" class="w-full" />
-                    <a href="/testing">
-                      <div
-                        class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 hover:opacity-100 transition duration-300 ease-in-out"
-                        style="background-color: rgba(251, 251, 251, 0.15)"></div>
-                    </a>
-                  </div>
-                </div>
-                <div class="p-6">
-                  <h5 class="font-bold text-lg mb-3">Penggunaan Sound Event Detection</h5>
-                  <p class="mb-10 pb-2">
-                    Memudahkan pengguna untuk dapat mengindentifikasi peristiwa dan kapan peristiwa tersebut terjadi pada sebuah klip audio.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div class="mb-6 lg:mb-0">
-              <div class="relative block bg-white rounded-lg shadow-lg">
-                <div class="flex">
-                  <div
-                    class="relative overflow-hidden bg-no-repeat bg-cover overflow-hidden bg-no-repeat bg-cover shadow-lg rounded-lg mx-4 -mt-4"
-                    data-mdb-ripple="true" data-mdb-ripple-color="light">
-                    <img src="https://img.freepik.com/free-photo/students-doing-homework-cafe_23-2148166376.jpg?w=1060&t=st=1659999058~exp=1659999658~hmac=32b6035eab728d4a5ed0cefc151894d1da8dc302218dc090f5dd745688cddd3c" class="w-full" />
-                    <a href="/testing">
-                      <div
-                        class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 hover:opacity-100 transition duration-300 ease-in-out"
-                        style="background-color: rgba(251, 251, 251, 0.15)"></div>
-                    </a>
-                  </div>
-                </div>
-                <div class="p-6">
-                  <h5 class="font-bold text-lg mb-3">Pendeteksi kecurangan ujian online</h5>
-                  <p class="mb-4 pb-2">
-                    Dengan kelas suara seperti speech yang dipelajari oleh model, pengguna dapat memanfaatkan model tersebut sebagai pendeteksi kecurangan ujian secara daring.
-                  </p>
-                </div>
-              </div>
-            </div>
-        </section>
-
-        <div class="grid w-full justify-center">
-          <button class="inline-flex bg-indigo-500 border-0 py-3 px-6 focus:outline-none hover:bg-indigo-600 rounded">
-            <a class="text-white text-lg" href="/testing">Lakukan Testing</a>
-          </button>
-        </div>
         {% include "footer.html" %}
   </body>
 </html>
